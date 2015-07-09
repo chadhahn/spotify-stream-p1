@@ -1,0 +1,18 @@
+<resources>
+  <string name="app_name">Spotify Streamer</string>
+
+  <string name="action_settings">Settings</string>
+
+  <!-- Search activity edit text string hint text -->
+  <string name="edit_text_search_hint">Search...</string>
+
+  <!-- Detail screen title -->
+  <string name="details_activity_title">Artist Top Tracks</string>
+
+  <!-- Message when something goes wrong loading the artist data -->
+  <string name="loading_error_msg">Failed to load data, please try again</string>
+
+  <!-- Message shown to the user when no results are found -->
+  <string name="no_results_found_msg">No results found. Please search again!</string>
+
+</resources>
