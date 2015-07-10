@@ -90,6 +90,7 @@ public class SearchActivity extends AppCompatActivity {
     @Override protected void onPreExecute() {
       super.onPreExecute();
 
+      //http://stackoverflow.com/questions/1109022/close-hide-the-android-soft-keyboard for hiding keyboard
       InputMethodManager inputMethodManager =
           (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
       inputMethodManager.hideSoftInputFromWindow(searchEditText.getWindowToken(), 0);
