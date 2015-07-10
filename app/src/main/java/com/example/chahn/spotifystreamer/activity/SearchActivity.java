@@ -74,7 +74,9 @@ public class SearchActivity extends AppCompatActivity {
 
   private boolean hasDataAndHitEnter(TextView v, int actionId, KeyEvent event) {
     return v.getText().length() > MIN_SEARCH_CHAR && (actionId == EditorInfo.IME_ACTION_DONE
-        || event.getAction() == KeyEvent.ACTION_UP && event.getKeyCode() == KeyEvent.KEYCODE_ENTER);
+        || event != null
+        && event.getAction() == KeyEvent.ACTION_UP
+        && event.getKeyCode() == KeyEvent.KEYCODE_ENTER);
   }
 
   /**
@@ -136,5 +138,4 @@ public class SearchActivity extends AppCompatActivity {
       }
     }
   }
-
 }
