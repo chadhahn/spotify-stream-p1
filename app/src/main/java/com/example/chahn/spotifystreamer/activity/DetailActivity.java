@@ -1,10 +1,14 @@
 package com.example.chahn.spotifystreamer.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ListView;
+import android.widget.TextView;
 import com.example.chahn.spotifystreamer.R;
 import com.example.chahn.spotifystreamer.adapter.TrackArrayAdapter;
 import com.example.chahn.spotifystreamer.model.SpotifyArtist;
@@ -27,12 +31,14 @@ public class DetailActivity extends AppCompatActivity {
 
   private TrackArrayAdapter trackArrayAdapter;
   private ListView detailListView;
+  private TextView noTracksText;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.artist_detail);
 
     trackArrayAdapter = new TrackArrayAdapter(this, R.layout.detail_row);
+    noTracksText = (TextView) findViewById(R.id.no_track_results_text);
     detailListView = (ListView) findViewById(R.id.detail_list_view);
     detailListView.setAdapter(trackArrayAdapter);
 
@@ -50,18 +56,29 @@ public class DetailActivity extends AppCompatActivity {
    * Task to load tracks for the given artist
    */
   public class SpotifyTrackTask extends AsyncTask<SpotifyArtist, Void, List<SpotifyTrack>> {
+
+    @Override protected void onPreExecute() {
+      super.onPreExecute();
+      noTracksText.setVisibility(View.GONE);
+    }
+
     @Override protected List<SpotifyTrack> doInBackground(SpotifyArtist... params) {
       SpotifyApi api = new SpotifyApi();
-      Tracks tracks = api.getService()
-          .getArtistTopTrack(params[0].getId(), COUNTRY_MAP);
+      Tracks tracks = api.getService().getArtistTopTrack(params[0].getId(), COUNTRY_MAP);
       return new SpotifyTrack.TrackTransformer().transform(tracks.tracks);
     }
 
     @Override protected void onPostExecute(List<SpotifyTrack> spotifyTracks) {
       super.onPostExecute(spotifyTracks);
-      trackArrayAdapter.addAll(spotifyTracks);
-      trackArrayAdapter.notifyDataSetChanged();
+
+      //Show results if found or show nothing found text
+      if (spotifyTracks.isEmpty()) {
+        noTracksText.setVisibility(View.VISIBLE);
+      } else {
+        trackArrayAdapter.addAll(spotifyTracks);
+        trackArrayAdapter.notifyDataSetChanged();
+      }
     }
   }
-
+  
 }

@@ -15,4 +15,7 @@
   <!-- Message shown to the user when no results are found -->
   <string name="no_results_found_msg">No results found. Please search again!</string>
 
+  <!-- Message shown to the user when no tracks are found -->
+  <string name="no_track_results_found_msg">No top tracks found. Please try another artist!</string>
+
 </resources>
